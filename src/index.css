@@ -1,0 +1,151 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0F172A;
+    color: #ffffff;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1e293b;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #4F46E5;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #7C3AED;
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-dark {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+  }
+
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 shadow-glow hover:shadow-lg hover:scale-105 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply glass border border-white/20 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 hover:bg-white/10 hover:scale-105 active:scale-95;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #4F46E5, #7C3AED, #06B6D4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-cyan {
+    background: linear-gradient(135deg, #06B6D4, #4F46E5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .animated-gradient {
+    background: linear-gradient(270deg, #4F46E5, #7C3AED, #06B6D4, #4F46E5);
+    background-size: 400% 400%;
+    animation: gradient 8s linear infinite;
+  }
+
+  .input-glass {
+    @apply glass border border-white/10 text-white placeholder-white/40 rounded-xl px-4 py-3 w-full focus:outline-none focus:border-primary-500/50 focus:ring-1 focus:ring-primary-500/30 transition-all duration-200;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-dark-400 hover:text-white hover:bg-white/5 transition-all duration-200 font-medium;
+  }
+
+  .sidebar-link.active {
+    @apply text-white bg-primary-600/20 border border-primary-500/20;
+  }
+
+  .glow-border {
+    box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.5), 0 0 20px rgba(79, 70, 229, 0.2);
+  }
+
+  .glow-border-cyan {
+    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.5), 0 0 20px rgba(6, 182, 212, 0.2);
+  }
+
+  .noise-overlay {
+    position: relative;
+  }
+
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+}
+
+@layer utilities {
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(79, 70, 229, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79, 70, 229, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .bg-dots {
+    background-image: radial-gradient(rgba(79, 70, 229, 0.15) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+}

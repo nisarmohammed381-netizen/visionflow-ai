@@ -1,0 +1,81 @@
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
+import { ReactNode, useEffect } from 'react';
+
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  children: ReactNode;
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+}
+
+const sizeMap = {
+  sm: 'max-w-md',
+  md: 'max-w-lg',
+  lg: 'max-w-2xl',
+  xl: 'max-w-4xl',
+};
+
+export default function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalProps) {
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    if (isOpen) document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [isOpen, onClose]);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isOpen]);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className={`relative glass-card w-full ${sizeMap[size]} max-h-[90vh] overflow-y-auto`}
+          >
+            {title && (
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+                <h2 className="text-xl font-bold text-white font-poppins">{title}</h2>
+                <button
+                  onClick={onClose}
+                  className="w-8 h-8 rounded-lg glass flex items-center justify-center text-dark-400 hover:text-white transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+            {!title && (
+              <button
+                onClick={onClose}
+                className="absolute top-4 right-4 w-8 h-8 rounded-lg glass flex items-center justify-center text-dark-400 hover:text-white transition-colors z-10"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+            {children}
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+}
